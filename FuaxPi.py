@@ -64,7 +64,7 @@ danglers =  ['g', 'j', 'p',
 prefixchr = re.compile("^\W+")
 suffixchr = re.compile("\W+\s*$")
 
-def le_danglers(word):
+def do_danglers(word):
     r=0
     d=0
     wrd = list(word)
@@ -76,13 +76,13 @@ def le_danglers(word):
 
     return ''.join(wrd)                    
 
-def le_digraphs(word):
+def do_digraphs(word):
     if len(word)>1:
         for digraph in digraphs:
             word=word.replace(digraph,digraph[::-1])            
     return word
 
-def le_crypt(orig):
+def do_crypt(orig):
     word = str.strip(orig.lower())
     if word.__len__()>2:
         #Isolate first char + any non-alpha chars such as " ` etc
@@ -98,8 +98,8 @@ def le_crypt(orig):
             bk=bkm.group().__len__()
             
         target = word[1+fr:-1-bk]
-        target = le_digraphs(target)
-        target = le_danglers(target)
+        target = do_digraphs(target)
+        target = do_danglers(target)
         word= word[:1+fr]+target+word[-1-bk:]
     return word
 
@@ -110,5 +110,5 @@ if __name__ == "__main__":
         for word in line.split():
             #test=do_crypt(word.rstrip())
             #print(test.crypt())
-            print(le_crypt(word))
+            print(do_crypt(word))
         
