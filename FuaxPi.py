@@ -37,6 +37,7 @@
 
 import re
 import sys
+import argparse
 
 VER = sys.version_info[:2]
 if VER < (3,0):
@@ -105,10 +106,34 @@ def do_crypt(orig):
 
             
 if __name__ == "__main__":    
-    thefile = "test.txt"
-    for line in open(thefile):
-        for word in line.split():
-            #test=do_crypt(word.rstrip())
-            #print(test.crypt())
-            print(do_crypt(word))
+    #thefile = "test.txt"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-srcfile", help="Source file to obfuscate")
+    parser.add_argument("-destfile",help="Obfuscated file")
+    _destfile=""
+    _srcfile=""
+    
+    args = parser.parse_args()
+    try:
+        _srcfile= open(args.srcfile)
+        if args.destfile:
+            _destfile= open(args.destfile,'w')
+            
+    except:
+        print("There was a problem opening source file")
+        sys.exit(3)
         
+    for line in _srcfile:
+        fauxline = []
+        for word in line.split():
+            fauxline.append(do_crypt(word))
+            
+        outputline = ' '.join(fauxline)+'\n'
+        
+        if _destfile:
+            _destfile.write(outputline)
+ 
+        else:
+            print(outputline)
+    
+    _srcfile.close()
