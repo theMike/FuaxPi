@@ -106,7 +106,6 @@ def do_crypt(orig):
 
             
 if __name__ == "__main__":    
-    #thefile = "test.txt"
     parser = argparse.ArgumentParser()
     parser.add_argument("-srcfile", help="Source file to obfuscate")
     parser.add_argument("-destfile",help="Obfuscated file")
@@ -124,16 +123,15 @@ if __name__ == "__main__":
         sys.exit(3)
         
     for line in _srcfile:
-        fauxline = []
+        fauxline = line
         for word in line.split():
-            fauxline.append(do_crypt(word))
-            
-        outputline = ' '.join(fauxline)+'\n'
+            crypted=do_crypt(word)
+            fauxline=fauxline.replace(word,crypted)
         
         if _destfile:
-            _destfile.write(outputline)
+            _destfile.write(fauxline)
  
         else:
-            print(outputline)
+            print(fauxline)
     
     _srcfile.close()
