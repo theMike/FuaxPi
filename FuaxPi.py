@@ -14,13 +14,11 @@
 # IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 #
-
-
 #FauxCrypt processing
 """
-    This is a feeble attempt at a python implementation of the FauxCrypt algorithm
+    This is an attempt at a python implementation of the FauxCrypt algorithm
     developed by D. M. Gualtieri <gualtieri TA ieee.org>.
-    Visit http://www DOT fauxcrypt DOT org/ for more info.
+    Visit http://www D0T fauxcrypt D0T org/ for more info.
     
     FauxCrypt is a method of obfuscation that makes plain text easy for
     a human (English speaking human) to decipher but difficult for a machine/bot to parse.
