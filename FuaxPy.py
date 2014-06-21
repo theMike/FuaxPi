@@ -107,29 +107,49 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-srcfile", help="Source file to obfuscate")
     parser.add_argument("-destfile",help="Obfuscated file")
+    parser.add_argument("-fword", help="Obfuscate a word")
+    parser.add_argument("-fline", help="Obfuscate a line")
     _destfile=""
     _srcfile=""
     
     args = parser.parse_args()
-    try:
-        _srcfile= open(args.srcfile)
-        if args.destfile:
-            _destfile= open(args.destfile,'w')
-            
-    except:
-        print("There was a problem opening source file")
-        sys.exit(3)
-        
-    for line in _srcfile:
-        fauxline = line
-        for word in line.split():
-            crypted=do_crypt(word)
-            fauxline=fauxline.replace(word,crypted)
-        
-        if _destfile:
-            _destfile.write(fauxline)
- 
-        else:
-            print(fauxline)
     
-    _srcfile.close()
+    if args.fword:
+        try:
+            print(do_crypt(args.fword))
+        except:
+            print("Can't deal with that word try another")
+            
+    #if args.obfline:
+    #    for word in str(args.obfline).split():
+    if args.fline:
+        try:
+            print(' '.join([do_crypt(w) for w in args.fline.split()]))
+            sys.exit(0)
+        except:
+            print("Can't deal with this line")
+            sys.exit(-1)
+            
+            
+    if args.destfile:
+        try:
+            _srcfile= open(args.srcfile)
+            _destfile= open(args.destfile,'w')
+                
+        except:
+            print("There was a problem opening source file")
+            sys.exit(3)
+            
+        for line in _srcfile:
+            fauxline = line
+            for word in line.split():
+                crypted=do_crypt(word)
+                fauxline=fauxline.replace(word,crypted)
+            
+            if _destfile:
+                _destfile.write(fauxline)
+     
+            else:
+                print(fauxline)
+        
+        _srcfile.close()
